@@ -1,0 +1,64 @@
+[
+    {
+      "item": "1",
+      "tipo": "img",
+      "descripcion": "assets/prueba/ejemplos/6.jpg",
+      "respuestas": [
+        {
+          "tipo": "R",
+          "descripcion": "assets/prueba/ejemplos/7.jpg",
+          "res": "A",
+          "tipod": "img"
+        },
+        {
+            "tipo": "R",
+            "descripcion": "assets/prueba/ejemplos/8.jpg",
+            "res": "A",
+            "tipod": "img"
+          },
+          {
+            "tipo": "R",
+            "descripcion": "assets/prueba/ejemplos/9.jpg",
+            "res": "A",
+            "tipod": "img"
+          },
+          {
+            "tipo": "R",
+            "descripcion": "assets/prueba/ejemplos/10.jpg",
+            "res": "A",
+            "tipod": "img"
+          }
+      ]
+    },
+    {
+        "item": "1",
+        "tipo": "img",
+        "descripcion": "assets/prueba/ejemplos/11.jpg",
+        "respuestas": [
+          {
+            "tipo": "R",
+            "descripcion": "assets/prueba/ejemplos/12.jpg",
+            "res": "A",
+            "tipod": "img"
+          },
+          {
+              "tipo": "R",
+              "descripcion": "assets/prueba/ejemplos/13.jpg",
+              "res": "A",
+              "tipod": "img"
+            },
+            {
+              "tipo": "R",
+              "descripcion": "assets/prueba/ejemplos/14.jpg",
+              "res": "A",
+              "tipod": "img"
+            },
+            {
+              "tipo": "R",
+              "descripcion": "assets/prueba/ejemplos/15.jpg",
+              "res": "A",
+              "tipod": "img"
+            }
+        ]
+      }
+  ]

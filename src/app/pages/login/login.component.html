@@ -1,0 +1,81 @@
+
+<div class="fondo">
+  <br><div class="opacity"></div>
+  <div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-sm-12"></div>
+        <div class="col-lg-6 col-sm-12">
+            <div class="row">
+              <div class="col" style="text-align: right;background: #e1251b;">
+                <button mat-stroked-button style="color: #fff;" (click)="loginAdmin()">Intranet</button>
+              </div>
+            </div>
+            <h1 class="responsive">MÓDULO DE EVALUACIÓN VOCACIONAL</h1>
+            <P class="responsive">El Ministerio de Trabajo y Promoción del Empleo pone a tu disposición tres pruebas, con las cuales podrás identificar tus intereses profesionales, tus habilidades para procesar la información y tu perfil emprendedor.</P>
+            <p class="responsive">Con los resultados de las pruebas, podrás conocer mejor tus características personales y tomar decisiones que te llevarán a una mayor satisfacción y desempeño en la carrera u ocupación que elijas.</p>
+            <div class="row pruebas responsive">
+                <div class="col-sm-12 col-lg-3">
+                    <h4>HABILIDADES BÁSICAS</h4>
+                    <div style="text-align: center;"><img src="assets/icono1.png" alt=""></div>
+                </div>
+                <div class="col-sm-12 col-lg-6">
+                    <h4>INVENTARIO DE ESTILOS PERSONALES Y PREFERENCIAS OCUPACIONALES</h4>
+                    <div style="text-align: center;"><img src="assets/icono2.png" alt=""></div>
+                </div>
+                <div class="col-sm-12 col-lg-3">
+                    <h4>POTENCIAL EMPRESARIAL</h4>
+                    <div style="text-align: center;"><img src="assets/icono3.png" alt=""></div>
+                </div>
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-xl-10 col-md-10 col-sm-12">
+                    <mat-card class="example-card" style="text-align: center;">
+                        <mat-card-header>
+                          <mat-card-title class="login">INICIAR SESIÓN</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content>
+                          <form  novalidate [formGroup]="formLogin">
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Usuario" formControlName="usuarioForm">
+                            <mat-error *ngIf="formLogin.get('usuarioForm').invalid">
+                              Campo requerido
+                            </mat-error>
+                          </mat-form-field>
+                          <br>
+                          <mat-form-field class="example-full-width">
+                            <input matInput placeholder="Contraseña" formControlName="passwordForm" [type]="hide ? 'password' : 'text'">
+                            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            </button>
+                            <mat-error *ngIf="formLogin.get('passwordForm').invalid">
+                              Campo requerido
+                            </mat-error>
+                          </mat-form-field>
+                          <br>
+                          <ngx-recaptcha2 #captchaElem [siteKey]="siteKey" formControlName="recaptcha"></ngx-recaptcha2>
+  <br>
+                          <button mat-button
+                          style="background: #E1251B;color:#fff"
+                          (click)="validaLogin()">
+                            <div *ngIf="!spinner">INGRESAR</div>
+                            <div class="d-flex align-items-center" *ngIf="spinner">
+                              <strong>Loading...</strong>
+                              <div class="spinner-border ml-auto" role="status" aria-hidden="true"></div>
+                            </div>
+                          </button>
+                          <br><br>
+                         <p >¿Aún no tienes una cuenta?  <a
+                          (click)="openDialog()" style="cursor: pointer;color: #007bff;
+                          font-weight: 700;"> Regístrate</a>
+                          <a href="#" routerLink="/respass" style="float:right;">Recuperar contraseña</a>
+                          </p>
+                          </form>
+                        </mat-card-content>
+                      </mat-card>
+                </div>
+            </div><br>
+        </div>
+    </div>
+</div>
+
+</div>

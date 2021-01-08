@@ -1,0 +1,34 @@
+<br>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-10 col-sm-12">
+            <div class="card">
+                <div class="card-header" style="background: #E1251B; color: #fff;">
+                    <h2>M&Oacute;DULO DE EVALUACION VOCACIONAL</h2>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-4" *ngFor="let item of evaluacion">
+                            <div class="card card-borde">
+                                <div class="card-body ">
+                                    <div class="titulo">
+                                        <h3><b>{{ item.title }}</b></h3>
+                                    </div>
+                                    <div class="parrafo" [innerHTML]="item.description" style="text-align: justify;"></div>
+                                    <div style="text-align: center;" class="icono" *ngIf="item.id == '1'"><img src="../../../assets/icono1.png" alt=""></div>
+                                    <div style="text-align: center;" class="icono" *ngIf="item.id == '2'"><img src="../../../assets/icono2.png" alt=""></div>
+                                    <div style="text-align: center;" class="icono" *ngIf="item.id == '3'"><img src="../../../assets/icono3.png" alt=""></div>
+                                </div>
+                            </div><br> <br>
+                            <div style="text-align: center;" class="button">
+                                <button mat-button style="background: #E1251B;color:#fff" (click)="ingresar(item.id)">INGRESAR</button>
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
+<br><br>

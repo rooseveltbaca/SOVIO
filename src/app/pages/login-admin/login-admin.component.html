@@ -1,0 +1,24 @@
+<h2 mat-dialog-title style="background: #E1251B;padding: 5px 10px;color: #fff;">INICIAR SESION</h2>
+<form  novalidate >
+    <div class="container">
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-3 col-form-label">Usuario</label>
+            <div class="col-sm-9">
+              <input type="text" class="form-control" id="staticEmail" >
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputPassword" class="col-sm-3 col-form-label">Contraseña</label>
+            <div class="col-sm-9">
+              <input type="password" class="form-control" id="inputPassword" >
+            </div>
+          </div>
+          <div class="row">
+              <div class="col" style="text-align: center;">
+                <a class="btn btn-primary"
+                style="background-color: #E1251B;border-color: #E1251B;"
+                (click)="validaLogin()">Entrar</a>
+              </div>
+          </div>
+    </div>
+</form>

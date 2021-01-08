@@ -1,0 +1,15 @@
+.titulo{
+    text-align: center;
+    background: #cfcfcf;
+    padding: 0.5%;
+}
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+[aria-label=primary] {
+    background-color: blue;
+}
+::ng-deep .mat-horizontal-stepper-header-container{
+    display: none !important;
+}
+

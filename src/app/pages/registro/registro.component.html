@@ -1,0 +1,293 @@
+<form class="needs-validation"
+novalidate
+[formGroup]="formRegistro"   (submit)="onSubmit(formRegistro)">
+<h2 mat-dialog-title style="color: red;">NUEVO REGISTRO DE USUARIO</h2>
+<mat-dialog-content class="mat-typography">
+ 
+    <div class="row">
+        <div class="col-lg-3 col-sm-12">
+          <div class="text-center">
+            <img src="{{ruta_imgdefaul}}" alt="..." class="img-thumbnail" width="150">
+            <br>
+            <span>Tamaño m&aacute;ximo (100 KB)</span>
+            <br>
+            <div class="input__row uploader">
+              <div id="inputval" class="input-value">Subir foto</div>
+              <label for="file_1"></label>
+              <input id="file_1" class="upload" type="file" (change)="fileChangeEvent($event)">
+            </div>
+            <!-- <input type="file" ngf-pattern="image/*" accept="image/*"  style="background: #E1251B;color:#fff"> -->
+            <!-- <button  mat-button style="background: #E1251B;color:#fff">Subir Foto</button> -->
+          </div>
+        </div>
+        <div class="col-lg-9 col-sm-12">
+            <mat-card>
+                <div class="form-row">
+                  <div class="col-md-6 ">
+                    <label for="tipoDocuemnto">Tipo de documento <span style="color: red;">*</span></label>
+                    <select class="custom-select input-sm " id="tipoDocuemnto" required
+                    formControlName="tipoDocForm" [(ngModel)]="registro.documentType"
+                    [ngClass]="{'is-invalid': formRegistro.get('tipoDocForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('tipoDocForm').valid}">
+                      <option selected disabled value="0">Seleccione</option>
+                      <option value="{{res.id}}" *ngFor="let res of documents">{{res.name}}</option>
+                    </select>
+                    
+                    <!-- <div class="invalid-feedback"
+                    *ngIf="formRegistro.get('tipoDocForm').hasError('required')
+                     && formRegistro.get('tipoDocForm').touched 
+                     || submitted">
+                      Tipo documento requerido.
+                    </div> -->
+                  </div>
+                  <div class="col-md-5 ">
+                    <label for="numero">Número de documento <span style="color: red;">*</span></label>
+                    <input type="text" [(ngModel)]="registro.documentNumber" class="form-control input-sm " id="numero" required
+                    formControlName="documentoForm"
+                    [ngClass]="{'is-invalid':formRegistro.get('documentoForm').hasError('required') && submitted ,
+                    'is-valid': formRegistro.get('documentoForm').valid}">
+                    <!-- <div class="invalid-feedback" *ngIf="formRegistro.get('documentoForm').hasError('required')
+                    && formRegistro.get('documentoForm').touched && submitted  formRegistro.get('documentoForm').hasError('required') && formRegistro.get('documentoForm').touched && submitted
+                      ">Número de documento requerido.</div> --> 
+                     
+                  </div>
+                  <div class="col-md-1  text-right">
+                     <br>
+                    <button type="button" (click)="buscarDocumento()" class="btn btn-sm" style=" background: #E1251B;color:#fff">Buscar</button>
+                  </div> 
+                  <div class="col-md-6 mt-1">
+                    <label for="nombre">Nombres <span style="color: red;">*</span></label>
+                    <input type="text" [disabled]="traeApi" class="form-control input-sm " id="nombre"
+                    required  [(ngModel)]="registro.name"
+                    formControlName="nombreForm"
+                    [ngClass]="{'is-invalid': formRegistro.get('nombreForm').hasError('required') && submitted,
+                    'is-valid': formRegistro.get('nombreForm').valid}">
+                    <!-- <div class="invalid-feedback"
+                    *ngIf="formRegistro.get('nombreForm').hasError('required') && formRegistro.get('nombreForm').touched || submitted">
+                      Nombre es requerido.
+                    </div> -->
+                    
+                </div>
+                <div class="col-md-6 mt-1">
+                  <label for="apepaterno">Apellido paterno</label>
+                  <input type="text"  [(ngModel)]="registro.fatherLastName" class="form-control input-sm " id="apepaterno"
+                   formControlName="apepaForm" [disabled]="traeApi"
+                   >
+                </div>
+                <div class="col-md-6 ">
+                  <label for="apematerno">Apellido materno</label>
+                  <input type="text"  [(ngModel)]="registro.motherLastName" class="form-control input-sm " id="apematerno" formControlName="apemaForm"  [disabled]="traeApi" >
+                </div>
+              <div class="col-md-6 ">
+                <label for="fecha">Fecha de nacimiento <span style="color: red;">*</span></label>
+                <input type="date" class="form-control input-sm " [(ngModel)]="registro.birthdayDate" id="fecha"
+                formControlName="fechaForm"
+                [ngClass]="{'is-invalid': formRegistro.get('fechaForm').hasError('required') && submitted,
+                'is-valid': formRegistro.get('fechaForm').valid}">
+                <!-- <div class="invalid-feedback"
+                *ngIf="formRegistro.get('fechaForm').hasError('required') && formRegistro.get('fechaForm').touched || submitted">
+                  Fecha de Nacimiento requerido.
+                </div> -->
+              </div>
+              <div class="col-md-6 ">
+                <label for="genero">Género <span style="color: red;">*</span></label>
+                <select   [(ngModel)]="registro.gender" class="custom-select input-sm " id="genero" required
+                formControlName="generoForm"
+                [ngClass]="{'is-invalid': formRegistro.get('generoForm').hasError('required') && submitted,
+                'is-valid': formRegistro.get('generoForm').valid}">
+                  <option selected disabled value="0">Seleccione</option>
+                  <option value="{{res.id}}" *ngFor="let res of genders">{{res.name}}</option>
+                </select>
+                <!-- <div class="invalid-feedback"
+                *ngIf="formRegistro.get('generoForm').hasError('required') && formRegistro.get('generoForm').touched || submitted">
+                   requerido
+                </div> -->
+              </div>
+                <div class="form-row">
+                  
+                  </div>
+                </div>
+            </mat-card>
+            <br>
+            <mat-card>
+              <div class="form-row">
+                <div class="col-md-6 ">
+                  <label for="nacimiento">Lugar de residencia <span style="color: red;">*</span></label>
+                  <input type="text"  [(ngModel)]="registro.address"  class="form-control input-sm " id="nacimiento" required
+                  formControlName="nacimientoForm"
+                    [ngClass]="{'is-invalid': formRegistro.get('nacimientoForm').hasError('required') && submitted,
+                    'is-valid': formRegistro.get('nacimientoForm').valid}">
+                    <!-- <div class="invalid-feedback"
+                    *ngIf="formRegistro.get('nacimientoForm').hasError('required') && formRegistro.get('nacimientoForm').touched || submitted">
+                      Lugar de nacimiento requerido
+                    </div> -->
+                </div>
+                <div class="col-md-6 ">
+                  <label for="grado">Grado de instrucción (máximo nivel alcanzado) <span style="color: red;">*</span></label>
+                  <select class="custom-select input-sm " id="grado" required
+                  formControlName="gradoForm" [(ngModel)]="registro.level" 
+                    [ngClass]="{'is-invalid': formRegistro.get('gradoForm').hasError('required') && submitted,
+                    'is-valid': formRegistro.get('gradoForm').valid}">
+                    <option selected disabled value="0">Seleccione</option>
+                    <option value="{{res.id}}" *ngFor="let res of levels">{{res.name}}</option>
+                  </select>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('gradoForm').hasError('required') && formRegistro.get('gradoForm').touched || submitted">
+                    Grado de instruccion requerido
+                  </div> -->
+                </div>
+                <div class="col-md-6 ">
+                  <label for="pais">Pais <span style="color: red;">*</span></label>
+                  <select class="custom-select input-sm " id="pais" required
+                  formControlName="paisForm" [(ngModel)]="registro.country" 
+                    [ngClass]="{'is-invalid': formRegistro.get('paisForm').hasError('required') && submitted,
+                    'is-valid': formRegistro.get('paisForm').valid}">
+                    <option selected disabled value="0">Seleccione</option>
+                    <option value="{{res.id}}" *ngFor="let res of countries">{{res.name}}</option>
+                  </select>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('paisForm').hasError('required') && formRegistro.get('paisForm').touched || submitted">
+                    Pais requerido.
+                  </div> -->
+                </div>
+                <div class="col-md-6 ">
+                  <label for="region">Región <span style="color: red;">*</span></label>
+                  <select class="custom-select input-sm " id="region" required
+                  formControlName="regionForm" [(ngModel)]="registro.geocode"
+                    [ngClass]="{'is-invalid': formRegistro.get('regionForm').hasError('required') && submitted,
+                    'is-valid': formRegistro.get('regionForm').valid}"
+                    (change)="traeProvincia()">
+                    <option selected disabled value="0">Seleccione</option>
+                    <option value="{{res.id}}" *ngFor="let res of regions">{{res.name}}</option>
+                  </select>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('regionForm').hasError('required') && formRegistro.get('regionForm').touched || submitted">
+                    Region requerido
+                  </div> -->
+                </div>
+                <div class="col-md-6 ">
+                  <label for="provincia">Provincia <span style="color: red;">*</span></label>
+                  <select class="custom-select input-sm " id="provincia" required
+                  formControlName="provinciaForm"
+                    [ngClass]="{'is-invalid': formRegistro.get('provinciaForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('provinciaForm').valid}"
+                    (change)="traeDistrito()">
+                    <option selected disabled value="0">Seleccione</option>
+                    <option *ngFor="let item of provincia" [value]="item.id">{{ item.name }}</option>
+                  </select>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('provinciaForm').hasError('required') && formRegistro.get('provinciaForm').touched || submitted">
+                    Provincia requerido
+                  </div> -->
+                </div>
+                <div class="col-md-6 mt-1">
+                  <label for="distrito">Distrito <span style="color: red;">*</span></label>
+                  <select class="custom-select input-sm " id="distrito" required
+                  formControlName="distritoForm"
+                    [ngClass]="{'is-invalid': formRegistro.get('distritoForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('distritoForm').valid}">
+                    <option selected disabled value="0">Seleccione</option>
+                    <option *ngFor="let item of distritos" [value]="item.id">{{ item.name }}</option>
+                  </select>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('distritoForm').hasError('required') && formRegistro.get('distritoForm').touched">
+                    Distrito requerido
+                  </div> -->
+                </div>
+
+                <div class="col-md-6 ">
+                  <label for="nacimiento">Discapacidad <span style="color: red;">*</span></label><br>                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="discapacidadForm" id="discSi" value="1"
+                    formControlName="discapacidadForm" (change)="change_radio_states('SI')"
+                    [ngClass]="{'is-invalid': formRegistro.get('discapacidadForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('discapacidadForm').valid}">
+                    <label class="form-check-label" for="discSi">Si</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="discapacidadForm" id="discNo" value="2"
+                    formControlName="discapacidadForm" (change)="change_radio_states('NO')"
+                    [ngClass]="{'is-invalid': formRegistro.get('discapacidadForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('discapacidadForm').valid}">
+                    <label class="form-check-label" for="discNo">NO</label>
+                  </div>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('discapacidadForm').hasError('required') && formRegistro.get('discapacidadForm').touched">
+                    Discapacidad requerido
+                  </div> -->
+                </div>
+
+                <div class="col-md-6 select-multiple">
+                  <label for="tipodis">Tipo de discapacidad</label><br>
+                  <mat-form-field appearance="fill">
+                    <mat-select formControlName="tipoDiscapacidadForm" multiple >
+                      <mat-option [value]="res.id" *ngFor="let res of disabilities" >{{res.name}}</mat-option>
+                    </mat-select>
+                  <!-- <select multiple  class="custom-select input-sm " id="tipodis" formControlName="tipoDiscapacidadForm">
+                    <option selected disabled value="">Seleccione</option>
+                    <option value="{{res.id}}" *ngFor="let res of disabilities">{{res.name}}</option>
+                  </select> -->
+                </mat-form-field>
+                </div>
+                <div class="col-md-6 ">
+                  <label for="institucion">Institución educativa</label>
+                  <input type="text" class="form-control input-sm " id="institucion" formControlName="institucionForm">
+                </div>
+
+                <div class="col-md-6 ">
+                  <label for="celular">Celular</label>
+                  <input type="text" [(ngModel)]="registro.mobile"  class="form-control input-sm " id="celular" formControlName="celularForm">
+                </div>
+                <div class="col-md-6 ">
+                  <label for="correo">Correo electrónico <span style="color: red;">*</span></label>
+                  <input type="text"  [(ngModel)]="registro.email" class="form-control input-sm " id="correo" required
+                  formControlName="correoForm" [formControl]="correoForm2"
+                    [ngClass]="{'is-invalid': formRegistro.get('correoForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('correoForm').valid}">
+                    <mat-error *ngIf="correoForm2.invalid">{{getErrorMessagecorreoForm()}}</mat-error>
+                </div>
+                <div class="col-md-6 ">
+                  <label for="confiCorreo">Confirmar correo electronico <span style="color: red;">*</span></label>
+                  <input type="text" class="form-control input-sm " id="confiCorreo" required
+                  formControlName="confiCorreoForm" [formControl]="confiCorreoForm2"
+                    [ngClass]="{'is-invalid': formRegistro.get('confiCorreoForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('confiCorreoForm').valid}">
+                    <mat-error *ngIf="confiCorreoForm2.invalid">{{getErrorMessageconfiCorreoForm()}}</mat-error>
+                </div>
+              </div>
+              
+              
+
+              
+              <div class="form-group">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="" id="terminos" required
+                  formControlName="terminosForm"
+                    [ngClass]="{'is-invalid': formRegistro.get('terminosForm').hasError('required') &&  submitted,
+                    'is-valid': formRegistro.get('terminosForm').valid}">
+                  <label class="form-check-label" for="terminos">
+                   Acepto y declaro bajo juramento que es verdadera la información brindada en el
+                    presente formulario, el mismo que tiene caracter de declaración jurada, en consecuencia asumo la responsabilidad civil
+                    y/o penal en caso de falsedad de la informacion ingresada.
+                  </label>
+                  <!-- <div class="invalid-feedback"
+                  *ngIf="formRegistro.get('terminosForm').hasError('required') && formRegistro.get('terminosForm').touched || submitted">
+                    Acepte los terminos y condiciones
+                  </div> -->
+                </div>
+                <label class="form-check-label">(<span style="color: red;">*</span>) Son datos que se deben ingresar obligatoriamente.</label>
+              </div>
+            </mat-card>
+        </div>
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions >
+  <div class="form-row"  style="width: 100%;"> 
+    <div class="col-md-8 text-right"><button type="submit"    mat-button    style="background: #E1251B;color:#fff">Registrar</button></div>
+    <div class="col-md-4 text-center"><button type="button"  mat-button (click)="cancelar()" style="background: #f5f0ef;
+      color: #ec0505;">Cancelar</button></div>
+  </div>
+  
+  
+</mat-dialog-actions>
+</form>

@@ -1,0 +1,31 @@
+.example-container {
+    width: 100%;
+   /*  height: 100%; */
+    border: 1px solid rgba(0, 0, 0, 0.5);
+  }
+  
+  .example-sidenav-content {
+    height: 100%;
+    /*
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    */
+  }
+  
+  .example-sidenav {
+    background-color: #efefef !important;
+    /*padding: 5%;*/
+  }
+
+  .mat-drawer {
+    width: 20%;
+  }
+
+  table {
+    width: 100%;
+  }
+.btn {
+  background: #9f9e9e;
+  color: #fff;
+}

@@ -1,0 +1,245 @@
+
+    <mat-tab-group animationDuration="0ms" #evaluacion class="header-less-tabs" [selectedIndex]="evaluacionIndex">
+        <mat-tab label="First" *ngFor="let p of prueba">
+            <div class="container"><!--justify-content-md-center-->
+            <div class="row align-items-center justify-content-md-center">
+                <div class="col-lg-11 col-sm-12">
+                    <div class="card">
+                        <div class="card-header" style="background: #E1251B; color: #fff;">
+                            <h2>{{ p.name }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="row align-items-center justify-content-md-center">
+                                <div class="col-lg-1 responsive" *ngIf="pruebaId != '3'">
+                                    <div class="example-button-container"
+                                     style="margin-bottom: 10%;"
+                                     *ngFor="let pru of totalPruebaBtn">
+                                         <button mat-mini-fab color="warn"
+                                         aria-label="Example icon button with a filter list icon"
+                                         [ngClass]="{'prueba-inactivo': pru.sequence != tipoPruebaABC}">
+                                           <b > {{ pru.sequence }}</b>
+                                         </button>
+                                     </div>
+                                 </div>
+                                 <div class="col-lg-10 col-sm-12">
+                                    <mat-tab-group [selectedIndex]="selectedIndex" mat-stretch-tabs #prueba class="header-blok-tabs" >
+                                        <mat-tab label="1. Instrucciones" disabled >
+                                            <br>
+                                            <div class="container">
+                                                <h3 style="text-align: center;"><b>{{ p.name  }}</b></h3>
+                                                <div [innerHTML]="p.instruction"  style="text-align: justify;padding: 0px 3%;"></div>
+                                                <mat-horizontal-stepper labelPosition="bottom" #stepperInstr >
+                                                    <mat-step *ngFor="let pre of p.data.INSTRUCCION" [optional]="isOptional" [selectedIndex]="">
+                                                       <!-- <div [innerHTML]="pre.title"  ></div>-->
+                                                        <div style="text-align: center;">
+                                                            <h3 class="titulo">Pregunta</h3>
+                                                            <div>
+                                                                <span *ngIf="pre.type == '1'">{{ pre.sequence }}</span>&nbsp;&nbsp;
+                                                                <img  [src]="'./assets/insA/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
+                                                                <p *ngIf="pre.type == '2'  || pre.type == '3'">{{ pre.description }}</p>
+                                                            </div>
+                                                            <br>
+                                                            <h3 class="titulo">Respuestas</h3>
+                                                            <div class="row">
+                                                                <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                    <img [src]="'./assets/ins'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                    <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                        <input class="form-check-input" type="radio"
+                                                                        [name]="'NAMEP'+pre.id"
+                                                                        [id]="'IDP'+res.id" [value]="res.id"
+                                                                        [checked]="res.value == '1'">
+                                                                        <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                        <label class="form-check-label" for=""  *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                    </div>
+                                                                    <div class="form-check" *ngIf="pre.type == '3'">
+                                                                        <input class="form-check-input" type="checkbox"
+                                                                        [value]="res.id"
+                                                                        [id]="'IDP'+res.id"
+                                                                        [checked]="res.value == '1'">
+                                                                        <label class="form-check-label" for="defaultCheck1">
+                                                                            {{ res.description }}
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <br>
+                                                            <div class="row">
+                                                                <!-- <p style="text-align: left;">Este es un ejemplo, la respueta Correcta es la figuta "{{pre.sequence}}"</p>-->
+                                                                <div class="col-xl-3 col-md-12 col-sm-12"  style="text-align: left;"></div>
+                                                                <div class="col-xl-6 col-md-12 col-sm-12" style="text-align: center;">
+                                                                    <button mat-button style="background: #E1251B;color:#fff" (click)="nextTab(selectedIndex+1)" >Siguiente &nbsp; &nbsp;  <img src="assets/siguiente.png" alt="" width="25"></button>
+                                                                </div>
+                                                                <div class="col-xl-3 col-md-12 col-sm-12">
+                                                                    <span >Marcados: {{ pre.order }} de {{ cantidadPra }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </mat-step>
+                                                </mat-horizontal-stepper>
+                                            </div>
+                                        </mat-tab>
+                                        <mat-tab label="2. Práctica" disabled >
+                                            <br>
+                                            <div class="container">
+                                                <h3 style="text-align: center;">{{ p.name  }}</h3>
+                                                <div [innerHTML]="p.instruction" style="text-align: justify;padding: 0px 3%;"></div>
+                                                <mat-horizontal-stepper labelPosition="bottom" #stepper >
+                                                    <mat-step *ngFor="let pre of p.data.TEST" [optional]="isOptional" [selectedIndex]="">
+                                                        <!--<div [innerHTML]="pre.title"  ></div>-->
+                                                        <div style="text-align: center;">
+                                                            <h3 class="titulo">Pregunta</h3>
+                                                            <div>
+                                                                <span *ngIf="pre.type == '1'">{{ pre.sequence }}</span>&nbsp;&nbsp;
+                                                                <img  [src]="'./assets/praA/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
+                                                                <p *ngIf="pre.type == '2' || pre.type == '3'">{{ pre.description }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <br>
+                                                            <h3 class="titulo">Respuestas</h3>
+                                                            <div class="row">
+                                                                <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                    <img [src]="'./assets/pra'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                    <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                        <input class="form-check-input" type="radio"
+                                                                        [name]="'NAMET'+pre.id"
+                                                                        [id]="'IDT'+res.id" [value]="res.id">
+                                                                        <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                        <label for="" class="form-check-label" *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                    </div>
+                                                                    <div class="form-check" *ngIf="pre.type == '3'">
+                                                                        <input class="form-check-input" type="checkbox" [value]="res.id" [id]="'IDP'+res.id">
+                                                                        <label class="form-check-label" for="defaultCheck1">
+                                                                            {{ res.description }}
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div><br><br><br>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                                <!--
+                                                                    <button mat-button style="background: #cfcfcf;color: black;"
+                                                                *ngIf="!comienzaPrueba">Instrucciones</button>
+                                                                -->
+                                                                <button mat-button style="background: #E1251B;color:#fff;"
+                                                                *ngIf="comienzaPrueba"
+                                                                (click)="previousStepper()"><img src="assets/atras.png" alt="" width="25"> Atras</button>
+
+                                                            </div>
+                                                            <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                                <div *ngIf="isPushedTest">
+                                                                    <button   mat-button style="background: #E1251B;color:#fff"
+                                                                    (click)="nextStepper(pre.id)"
+                                                                    *ngIf="tPreguntaPrueba">Siguiente &nbsp;&nbsp; <img src="assets/siguiente.png" alt="" width="25"></button>
+                                                                </div>
+                                                                <div *ngIf="isPushedTest">
+                                                                    <!-- <button  disabled  mat-button style="background: #E1251B;color:#fff"
+                                                                    (click)="nextStepper()"
+                                                                    *ngIf="tPreguntaPrueba">Siguiente &nbsp;&nbsp; <img src="assets/siguiente.png" alt="" width="25"></button> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                                <button mat-button style="background: #cfcfcf;color: black;"
+                                                                (click)="nextTab(selectedIndex+1)">Comenzar prueba</button>
+                                                            </div>
+                                                            <div class="col-xl-3 col-md-12 col-sm-12"  style="text-align: left;">
+                                                                <span >Marcados: {{ pre.order }} de {{ cantidadPra }}</span>
+                                                            </div>
+                                                        </div>
+                                                    </mat-step>
+                                                </mat-horizontal-stepper>
+                                            </div>
+                                        </mat-tab>
+                                        <mat-tab label="3. Prueba" disabled>
+                                            <br>
+                                            <div class="container">
+                                                <div class="row" *ngIf="pruebaId == '1'">
+                                                    <div class="col-xl-3 col-md-3 col-sm-12"   style="text-align: left; ">
+                                                        <p><span class="badge badge-dark pt-2 pb-2" style="font-size: 15px;">Tiempo: {{ hours }}:{{ minutes }}:{{ seconds }}</span></p>
+                                                    </div>
+                                                    <div [innerHTML]="p.instruction" style="text-align: justify;padding: 0px 3%;"></div>
+                                                </div>
+                                                <h3 style="text-align: center;"><b>{{ p.name  }}</b></h3>
+                                                  <mat-horizontal-stepper labelPosition="bottom" #stepperPrueba>
+                                                    <mat-step *ngFor="let pre of p.data.PRACTICE" [optional]="isOptional">
+                                                        <div style="text-align: center;">
+                                                            <h3 class="titulo">Pregunta</h3>
+                                                            <div>
+                                                                <span *ngIf="pre.type == '1'">{{ pre.sequence }}</span>&nbsp;&nbsp;
+                                                                <img  [src]="'./assets/pru'+p.sequence+'/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
+                                                                <p *ngIf="pre.type == '2'  || pre.type == '3'">{{ pre.description }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <br>
+                                                            <h3 class="titulo">Respuestas</h3>
+                                                            
+                                                                <mat-radio-group
+                                                                aria-labelledby="example-radio-group-label"
+                                                                class="example-radio-group"
+                                                                [(ngModel)]="pre.response">
+                                                                <div class="row">
+                                                                <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                    <img [src]="'./assets/pruA/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                        <mat-radio-button class="example-radio-button" [value]="res.id" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                            <label for="" class="form-check-label"  *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                            <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                        </mat-radio-button>
+                                                                       <!-- <input class="form-check-input" type="radio"
+                                                                        [name]="'NAMEP'+pre.id"
+                                                                        [id]="'IDT'+res.id" [value]="false"
+                                                                        [(ngModel)]="pre.pre.response">-->
+                                                                    <div class="form-check" *ngIf="pre.type == '3'">
+                                                                        <input class="form-check-input" type="checkbox" [value]="res.id" [id]="'IDP'+res.id">
+                                                                        <label class="form-check-label" for="defaultCheck1">
+                                                                            {{ res.description }}
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            </mat-radio-group>
+                                                            
+                                                            <br>
+                                                        </div><br>
+                                                            <div style="text-align: center;" class="row">
+                                                                <div class="col-xl-3 col-md-12 col-sm-12">
+                                                                   <button mat-button style="background: #E1251B;color:#fff;"
+                                                                    (click)="atrasPregunta()"><img src="assets/atras.png" alt="" width="25"> Atras</button>
+                                                                </div>
+                                                                <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                                    <div *ngIf="isPushedPractice">
+                                                                        <button mat-button style="background: #E1251B;color:#fff"
+                                                                        (click)="siguientePregunta(pre)"
+                                                                        *ngIf="tPreguntaP">Siguiente pregunta &nbsp;&nbsp;<img src="assets/siguiente.png" alt="" width="25"></button>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xl-3 col-md-12 col-sm-12 mb-3">
+                                                                    <button mat-button style="background: #cfcfcf;color: black;"
+                                                                    (click)="siguientePrueba(pre)" >Siguiente prueba</button>
+                                                                </div>
+                                                                <div class="col-xl-3 col-md-12 col-sm-12">
+                                                                    <span style="float: right;">Marcados: {{ pre.order }} de {{ cantidadPru }}</span>
+                                                                </div>
+        
+                                                            </div><br>
+                                                        </mat-step>
+                                                    </mat-horizontal-stepper>
+                                            </div>
+                                        </mat-tab>
+                                    </mat-tab-group>
+                                 </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <button mat-button style="background: #cfcfcf;color: black;" routerLink="/inicio">SALIR</button>
+                          </div>
+                        <br>
+                      </div>
+<br>
+                </div>
+            </div>
+        </div>
+        </mat-tab>
+    </mat-tab-group>
+

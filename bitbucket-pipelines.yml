@@ -1,0 +1,23 @@
+image: node:10.15.3
+
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build
+          caches:
+            - node
+          script:
+            - npm install -g @angular/cli
+            - npm install
+            - ng build
+          artifacts:
+            - dist/**
+      - step:
+          name: Deploy
+          deployment: staging
+          script:
+            - scp -r $LOCAL_PATH $SSH_USER@$HOST:$REMOTE_PATH
+
+options:
+  docker: true

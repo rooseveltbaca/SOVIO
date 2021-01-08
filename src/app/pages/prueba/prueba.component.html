@@ -1,0 +1,177 @@
+<br>
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-lg-10 col-sm-12">
+            <div class="card">
+                <div class="card-header" style="background: #E1251B; color: #fff;">
+                    <h2>{{ titulo }}</h2>
+                </div>
+                <div class="card-body">
+                    <mat-tab-group [selectedIndex]="selectedIndex" >
+                        <mat-tab label="1. Instrucciones" disabled>
+                            <br>
+                            <div class="container">
+                                <div *ngFor="let item of lista">
+                                    <h3 *ngIf="item.tipo == 'h3'" style="text-align: center;"><b>{{ item.descripcion }}</b></h3>
+                                    <p *ngIf="item.tipo == 'p'">{{ item.descripcion }}</p>
+                                    <ul *ngIf="item.tipo == 'ul'">
+                                        <li *ngFor="let des of item.subtipo">{{ des.descripcion }}</li>
+                                    </ul>
+                                </div>
+                                <div style="text-align: center;" *ngFor="let item of preguntaI">
+                                    <h3 class="titulo">Pregunta</h3>
+                                    <div>
+                                        <span *ngIf="item.tipo=='img'">{{ item.item }}</span>&nbsp;&nbsp;
+                                        <img  [src]="item.descripcion" alt="" *ngIf="item.tipo=='img'" width="80">
+                                        <p *ngIf="item.tipo=='p'">{{ item.descripcion }}</p>
+                                    </div>
+                                    <br>
+                                    <h3 class="titulo">Respuestas</h3>
+                                    <div class="row">
+                                        <div class="col" *ngFor="let item1 of item.respuestas" style="text-align: center;">
+                                            <label for=""  *ngIf="!item1.tipod">{{ item1.descripcion }}</label>
+                                            <img [src]="item1.descripcion" alt="" *ngIf="item1.tipod == 'img'" width="50"><br>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="radio"
+                                                name="inlineRadioOptions"
+                                                id="inlineRadio1" value="option1"
+                                                [checked]="item1.res == 'I'">
+                                                <label class="form-check-label" for="inlineRadio1">{{ item1.res }}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <p style="text-align: left;" *ngIf="tipoPrueba=='1'">Los dos nombres son exactamente iguales. Fíjese en la HOJA DE RESPUESTAS donde dice: ZONA DE PRÁCTICA B. En el ejemplo 1 rellene o pinte el círculo que contiene la letra I (de Idéntico) para indicar que ambos nombres están escritos de forma idéntica.</p>
+                                    <div style="text-align: center;">
+                                        <br>
+                                        <button mat-button style="background: #E1251B;color:#fff;float: left;" routerLink="/inicio">SALIR</button>
+                                        <button mat-button style="background: #E1251B;color:#fff" (click)="nextTab(selectedIndex+1)" >Siguiente</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="2. Práctica" disabled>
+                            <br>
+                            <div class="container">
+                                <div *ngFor="let item of listaPractica">
+                                    <h3 *ngIf="item.tipo == 'h3'" style="text-align: center;">{{ item.descripcion }}</h3>
+                                    <p *ngIf="item.tipo == 'p'">{{ item.descripcion }}</p>
+                                    <ul *ngIf="item.tipo == 'ul'">
+                                        <li *ngFor="let des of item.subtipo">{{ des.descripcion }}</li>
+                                    </ul>
+                                </div>
+                                <mat-horizontal-stepper labelPosition="bottom" #stepper>
+                                    <mat-step *ngFor="let item of preguntas" [optional]="isOptional">
+                                        <div style="text-align: center;">
+                                            <h3 class="titulo">Pregunta</h3>
+                                            <div>
+                                                <span *ngIf="item.tipo=='img'" >{{ item.item }}</span>&nbsp;&nbsp;
+                                                <img  [src]="item.descripcion" alt="" *ngIf="item.tipo=='img'" width="80">
+                                                <p *ngIf="item.tipo=='p'">{{ item.descripcion }}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <br>
+                                            <h3 class="titulo">Respuestas</h3>
+                                            <div class="row">
+                                                <div class="col" *ngFor="let item1 of item.respuestas" style="text-align: center;">
+                                                    <label for=""  *ngIf="!item1.tipod">{{ item1.descripcion }}</label>
+                                                    <img [src]="item1.descripcion" alt="" *ngIf="item1.tipod == 'img'" width="50"><br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                                        <label class="form-check-label" for="inlineRadio1">{{ item1.res }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-step>
+                                </mat-horizontal-stepper>
+                                <br>
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <button mat-button style="background: #E1251B;color:#fff;float: left;" routerLink="/inicio">SALIR</button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button mat-button style="background: #E1251B;color:#fff;" *ngIf="!comienzaPrueba">Instrucciones</button>
+                                                <button mat-button style="background: #E1251B;color:#fff;" *ngIf="comienzaPrueba" (click)="stepper.previous()">Atras</button>
+                                            </div>
+                                            <div class="col" style="text-align: center;">
+                                                <button mat-button style="background: #E1251B;color:#fff" (click)="nextStepper()">Siguiente</button>
+                                            </div>
+                                            <div class="col-2">
+                                                <button mat-button style="background: #E1251B;color:#fff"
+                                                (click)="nextTab(selectedIndex+1)"
+                                                *ngIf="comienzaPrueba">Comenzar prueba</button>
+                                            </div>
+                                            <div class="col-3">
+                                                <span style="float: right;">Marcados: 0 de 3</span>
+                                            </div>
+                                        </div>
+                            </div>
+                        </mat-tab>
+                        <mat-tab label="3. Prueba" disabled>
+                            <br>
+                            <div class="container">
+                                <div *ngFor="let item of listaPrueba">
+                                    <h3 *ngIf="item.tipo == 'h3'" style="text-align: center;">{{ item.descripcion }}</h3>
+                                    <p *ngIf="item.tipo == 'p'">{{ item.descripcion }}</p>
+                                    <ul *ngIf="item.tipo == 'ul'">
+                                        <li *ngFor="let des of item.subtipo">{{ des.descripcion }}</li>
+                                    </ul>
+                                </div>
+                                  <mat-horizontal-stepper labelPosition="bottom" #stepperPrueba>
+                                    <mat-step *ngFor="let item of preguntasP" [optional]="isOptional">
+                                        <div style="text-align: center;">
+                                            <h3 class="titulo">Pregunta</h3>
+                                            <div >
+                                                <span *ngIf="item.tipo=='img'">{{ item.item }}</span>&nbsp;&nbsp;
+                                                <img  [src]="item.descripcion" alt="" *ngIf="item.tipo=='img'" width="50">
+                                                <p *ngIf="item.tipo=='p'">{{ item.descripcion }}</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <br>
+                                            <h3 class="titulo">Respuestas</h3>
+                                            <div class="row">
+                                                <div class="col" *ngFor="let item1 of item.respuestas" style="text-align: center;">
+                                                    <label for=""  *ngIf="!item1.tipod">{{ item1.descripcion }}</label>
+                                                    <img [src]="item1.descripcion" alt="" *ngIf="item1.tipod == 'img'" width="80"><br>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" [id]="item1.res" name="resPrueba" [value]="item.res"
+                                                        [(ngModel)]="resPrueba"
+                                                        (change)="radio($event.target.value)">
+                                                        <label class="form-check-label" [for]="item1.res">{{ item1.res }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-step>
+                                  </mat-horizontal-stepper>
+                                  <br>
+                                            <div style="text-align: center;" class="row">
+                                                <div class="col-2">
+                                                    <button mat-button style="background: #E1251B;color:#fff;float: left;" routerLink="/inicio">SALIR</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button mat-button style="background: #E1251B;color:#fff;"  (click)="stepperPrueba.previous()">Atras</button>
+                                                </div>
+                                                <div class="col" style="text-align: center;">
+                                                    <button mat-button style="background: #E1251B;color:#fff" (click)="stepperPrueba.next()">Siguiente</button>
+                                                </div>
+                                                <div class="col-2">
+                                                    <button mat-button style="background: #E1251B;color:#fff"
+                                                    (click)="siguientePrueba(selectedIndex+1)"
+                                                    *ngIf="comienzaPrueba">Siguiente prueba</button>
+                                                </div>
+                                                <div class="col-3">
+                                                    <span style="float: right;">Marcados: 0 de 3</span>
+                                                </div>
+                                            </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+              </div>
+        </div>
+    </div>
+</div>
