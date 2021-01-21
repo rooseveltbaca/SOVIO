@@ -210,12 +210,13 @@ export class TestComponent implements OnInit {
 
   nextStepper(id: number): void {
     console.log(this.prueba);
-    const preCorrecta = this.prueba[0].data.TEST.filter(e => e.id === id)[0].answers
-    .filter(j => j.value === '1')[0].sequence;
-    const orden = this.prueba[0].data.TEST.filter(e => e.id === id)[0].sequence;
+    console.log(id);
     const cantidad = this.prueba[0].data.TEST.length;
     const pruebaId = sessionStorage.getItem('pruebaId');
     if (pruebaId === '1'){
+      const preCorrecta = this.prueba[0].data.TEST.filter(e => e.id === id)[0].answers
+      .filter(j => j.value === '1')[0].sequence;
+      const orden = this.prueba[0].data.TEST.filter(e => e.id === id)[0].sequence;
       swal.fire({
         title: 'Mensaje Informativo',
         text: 'La respuesta correcta para la pregunta N° ' + orden +  ' es la "' + preCorrecta + '"',
@@ -235,6 +236,9 @@ export class TestComponent implements OnInit {
         }
       });
     } else {
+      if(this.stepPratica == 0){
+        this.selectedIndex = 2;
+      }
       this.stepPratica++;
       this.comienzaPrueba = true;
       this.stepper.next();
@@ -252,17 +256,39 @@ export class TestComponent implements OnInit {
   }
 
   siguientePregunta(pre): void{
-    console.log(pre);
-    this.testService.saveMarcado(pre.id, pre.response).subscribe(dat => {
+    const pruebaId = sessionStorage.getItem('pruebaId');
+    if (pruebaId === '2'){
+      if(pre.response !== ''){
+        console.log(pre);
+        this.testService.saveMarcado(pre.id, pre.response).subscribe(dat => {});
+        const cantidad = this.prueba[0].data.PRACTICE.length;
+        this.stepPueba++;
+        this.stepperPrueba.next();
+        if (this.stepPueba >= (cantidad - 1)){
+          this.isPushedPractice = false;
+        }else{
+          this.isPushedPractice = true;
+        }
+      } else {
+        swal.fire(
+          '',
+          'Debe Marcar una opción',
+          'error'
+        );
+      }
+    } else {
+      console.log(pre);
+      this.testService.saveMarcado(pre.id, pre.response).subscribe(dat => {
 
-    });
-    const cantidad = this.prueba[0].data.PRACTICE.length;
-    this.stepPueba++;
-    this.stepperPrueba.next();
-    if (this.stepPueba >= (cantidad - 1)){
-      this.isPushedPractice = false;
-    }else{
-      this.isPushedPractice = true;
+      });
+      const cantidad = this.prueba[0].data.PRACTICE.length;
+      this.stepPueba++;
+      this.stepperPrueba.next();
+      if (this.stepPueba >= (cantidad - 1)){
+        this.isPushedPractice = false;
+      }else{
+        this.isPushedPractice = true;
+      }
     }
   }
 
@@ -352,5 +378,22 @@ export class TestComponent implements OnInit {
       }
       return sequence;
     }
+  }
+
+  salir(): void{
+    swal.fire({
+      title: 'Mensaje Informativo',
+      text: '¿Estás seguro de que deseas salir de la PRUEBA? Al aceptar solo se tomara en cuenta aquellas preguntas que han sido marcadas y no podrás volver a registrar dicha PRUEBA.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
+    }).then((result1) => {
+      if (result1.isConfirmed) {
+        this.router.navigate(['/inicio']);
+        // window.location.reload();
+      }
+    });
   }
 }

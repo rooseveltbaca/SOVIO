@@ -35,33 +35,43 @@
                                                             <h3 class="titulo">Pregunta</h3>
                                                             <div>
                                                                 <span *ngIf="pre.type == '1'">{{ pre.sequence }}</span>&nbsp;&nbsp;
-                                                                <img  [src]="'./assets/insA/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
+                                                                <img  [src]="'./assets/ins'+p.sequence+'/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
                                                                 <p *ngIf="pre.type == '2'  || pre.type == '3'">{{ pre.description }}</p>
                                                             </div>
                                                             <br>
                                                             <h3 class="titulo">Respuestas</h3>
-                                                            <div class="row">
-                                                                <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
-                                                                    <img [src]="'./assets/ins'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
-                                                                    <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
-                                                                        <input class="form-check-input" type="radio"
-                                                                        [name]="'NAMEP'+pre.id"
-                                                                        [id]="'IDP'+res.id" [value]="res.id"
-                                                                        [checked]="res.value == '1'">
-                                                                        <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
-                                                                        <label class="form-check-label" for=""  *ngIf="pre.type == '2'">{{ res.description }}</label>
-                                                                    </div>
-                                                                    <div class="form-check" *ngIf="pre.type == '3'">
-                                                                        <input class="form-check-input" type="checkbox"
-                                                                        [value]="res.id"
-                                                                        [id]="'IDP'+res.id"
-                                                                        [checked]="res.value == '1'">
-                                                                        <label class="form-check-label" for="defaultCheck1">
-                                                                            {{ res.description }}
-                                                                        </label>
+                                                            <mat-radio-group
+                                                                aria-labelledby="example-radio-group-label"
+                                                                class="example-radio-group"
+                                                                [(ngModel)]="pre.response">
+                                                                <div class="row">
+                                                                    <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                        <img [src]="'./assets/ins'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                        <mat-radio-button class="example-radio-button" [value]="res.id" [checked]="res.value == '1'" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                            {{ pre.type == '2' ? res.description : res.sequence }}
+                                                                        </mat-radio-button>
+                                                                        <!--
+                                                                            <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                            <input class="form-check-input" type="radio"
+                                                                            [name]="'NAMEP'+pre.id"
+                                                                            [id]="'IDP'+res.id" [value]="res.id"
+                                                                            [checked]="res.value == '1'">
+                                                                            <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                            <label class="form-check-label" for=""  *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                        </div>
+                                                                        -->
+                                                                        <div class="form-check" *ngIf="pre.type == '3'">
+                                                                            <input class="form-check-input" type="checkbox"
+                                                                            [value]="res.id"
+                                                                            [id]="'IDP'+res.id"
+                                                                            [checked]="res.value == '1'">
+                                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                                {{ res.description }}
+                                                                            </label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </mat-radio-group>
                                                             <br>
                                                             <div class="row">
                                                                 <!-- <p style="text-align: left;">Este es un ejemplo, la respueta Correcta es la figuta "{{pre.sequence}}"</p>-->
@@ -90,15 +100,48 @@
                                                             <h3 class="titulo">Pregunta</h3>
                                                             <div>
                                                                 <span *ngIf="pre.type == '1'">{{ pre.sequence }}</span>&nbsp;&nbsp;
-                                                                <img  [src]="'./assets/praA/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
+                                                                <img  [src]="'./assets/pra'+p.sequence+'/'+pre.imageUrl" alt="" width="50" *ngIf="pre.type == '1'">
                                                                 <p *ngIf="pre.type == '2' || pre.type == '3'">{{ pre.description }}</p>
                                                             </div>
                                                         </div>
                                                         <div>
                                                             <br>
                                                             <h3 class="titulo">Respuestas</h3>
-                                                            <div class="row">
-                                                                <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                <mat-radio-group
+                                                                aria-labelledby="example-radio-group-label"
+                                                                class="example-radio-group"
+                                                                [(ngModel)]="pre.response">
+                                                                <div class="row">
+                                                                    <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
+                                                                        <img [src]="'./assets/pra'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                        <mat-radio-button class="example-radio-button" [value]="res.id" [checked]="res.value == '1'" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                            <label for="" class="form-check-label"  *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                            <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                        </mat-radio-button>
+                                                                        <!--
+                                                                            <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
+                                                                            <input class="form-check-input" type="radio"
+                                                                            [name]="'NAMEP'+pre.id"
+                                                                            [id]="'IDP'+res.id" [value]="res.id"
+                                                                            [checked]="res.value == '1'">
+                                                                            <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
+                                                                            <label class="form-check-label" for=""  *ngIf="pre.type == '2'">{{ res.description }}</label>
+                                                                        </div>
+                                                                        -->
+                                                                        <div class="form-check" *ngIf="pre.type == '3'">
+                                                                            <input class="form-check-input" type="checkbox"
+                                                                            [value]="res.id"
+                                                                            [id]="'IDP'+res.id"
+                                                                            [checked]="res.value == '1'">
+                                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                                {{ res.description }}
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </mat-radio-group>
+                                                                <!--
+                                                                    <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
                                                                     <img [src]="'./assets/pra'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
                                                                     <div class="form-check form-check-inline" *ngIf="pre.type == '1' || pre.type == '2'">
                                                                         <input class="form-check-input" type="radio"
@@ -114,7 +157,8 @@
                                                                         </label>
                                                                     </div>
                                                                 </div>
-                                                            </div><br><br><br>
+                                                                -->
+                                                            <br><br><br>
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
@@ -122,27 +166,27 @@
                                                                     <button mat-button style="background: #cfcfcf;color: black;"
                                                                 *ngIf="!comienzaPrueba">Instrucciones</button>
                                                                 -->
-                                                                <button mat-button style="background: #E1251B;color:#fff;"
+                                                                <button mat-button style="background: #E1251B;color:#fff"
                                                                 *ngIf="comienzaPrueba"
                                                                 (click)="previousStepper()"><img src="assets/atras.png" alt="" width="25"> Atras</button>
 
                                                             </div>
-                                                            <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                            <div class="col-xl-6 col-md-12 col-sm-12 mb-3" style="text-align: center;">
                                                                 <div *ngIf="isPushedTest">
                                                                     <button   mat-button style="background: #E1251B;color:#fff"
                                                                     (click)="nextStepper(pre.id)"
                                                                     *ngIf="tPreguntaPrueba">Siguiente &nbsp;&nbsp; <img src="assets/siguiente.png" alt="" width="25"></button>
                                                                 </div>
-                                                                <div *ngIf="isPushedTest">
-                                                                    <!-- <button  disabled  mat-button style="background: #E1251B;color:#fff"
-                                                                    (click)="nextStepper()"
-                                                                    *ngIf="tPreguntaPrueba">Siguiente &nbsp;&nbsp; <img src="assets/siguiente.png" alt="" width="25"></button> -->
+                                                                <div *ngIf="!isPushedTest">
+                                                                    <button mat-button style="background: #E1251B;color:#fff"
+                                                                    (click)="nextTab(selectedIndex+1)">Siguiente &nbsp;&nbsp; <img src="assets/siguiente.png" alt="" width="25"></button>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
-                                                                <button mat-button style="background: #cfcfcf;color: black;"
-                                                                (click)="nextTab(selectedIndex+1)">Comenzar prueba</button>
-                                                            </div>
+                                                            <!--<div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
+                                                                <button mat-button style="background: #E1251B;color:#fff"
+                                                                (click)="nextTab(selectedIndex+1)"
+                                                                >comenzar</button>
+                                                            </div>-->
                                                             <div class="col-xl-3 col-md-12 col-sm-12"  style="text-align: left;">
                                                                 <span >Marcados: {{ pre.order }} de {{ cantidadPra }}</span>
                                                             </div>
@@ -181,7 +225,7 @@
                                                                 [(ngModel)]="pre.response">
                                                                 <div class="row">
                                                                 <div class="col" *ngFor="let res of pre.answers" style="text-align: center;">
-                                                                    <img [src]="'./assets/pruA/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
+                                                                    <img [src]="'./assets/pru'+p.sequence+'/'+res.imageUrl" alt="" width="50" *ngIf="pre.type == '1'"><br>
                                                                         <mat-radio-button class="example-radio-button" [value]="res.id" *ngIf="pre.type == '1' || pre.type == '2'">
                                                                             <label for="" class="form-check-label"  *ngIf="pre.type == '2'">{{ res.description }}</label>
                                                                             <label class="form-check-label" [for]="res.title" *ngIf="pre.type == '1'">{{ res.sequence }}</label>
@@ -204,7 +248,7 @@
                                                         </div><br>
                                                             <div style="text-align: center;" class="row">
                                                                 <div class="col-xl-3 col-md-12 col-sm-12">
-                                                                   <button mat-button style="background: #E1251B;color:#fff;"
+                                                                   <button mat-button style="background: #E1251B;color:#fff"
                                                                     (click)="atrasPregunta()"><img src="assets/atras.png" alt="" width="25"> Atras</button>
                                                                 </div>
                                                                 <div class="col-xl-3 col-md-12 col-sm-12 mb-3" style="text-align: center;">
@@ -232,7 +276,7 @@
                             </div>
                         </div>
                         <div style="text-align: center;">
-                            <button mat-button style="background: #cfcfcf;color: black;" routerLink="/inicio">SALIR</button>
+                            <button mat-button style="background: #cfcfcf;color: black;" (click)="salir()">SALIR</button>
                           </div>
                         <br>
                       </div>

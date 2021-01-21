@@ -16,6 +16,13 @@ export class DashboardComponent implements AfterViewInit  {
   dataSourceTest = new MatTableDataSource<FiltroTest>(ELEMENT_DATA_TEST);
   typeFilter = '1';
   regions = [];
+  provincia = [];
+  distritos = [];
+  documents = [];
+  parameters: any;
+  regionModel: string;
+  provinciaModel: string;
+  distritoModel: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public  registroServer: RegistroService) { }
@@ -30,8 +37,25 @@ export class DashboardComponent implements AfterViewInit  {
   parametersRegister(){
     this.registroServer.getParametersRegister().subscribe(data => {
       this.regions = data.regions;
+      this.parameters = data;
+      this.documents = data.documents;
     })
 
+  }
+
+  traeProvincia(item:string): void{
+    console.log(item);
+    const region = Number(item);
+    this.provincia = this.parameters.regions.filter(e => Number(e.id) === region)[0].provinces;
+  }
+
+  traeDistrito(item:string): void{
+    const region = Number(this.regionModel);
+    const provincia = Number(item);
+    console.log(item+'¿'+this.regionModel);
+    this.distritos = this.parameters.regions
+      .filter(e => Number(e.id) === region)[0].provinces
+      .filter(i => Number(i.id) === provincia)[0].districts;
   }
 
 }

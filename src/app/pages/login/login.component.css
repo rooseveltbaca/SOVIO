@@ -39,7 +39,7 @@ h4{
     background-color: #000000;
 }
 .fondo{
-    background-image: url("../../../../src/assets/login.png");
+    background-image: url('../../../../src/assets/login.png');
 	text-align: center;
     background-attachment: fixed;
 	background-repeat: no-repeat;
